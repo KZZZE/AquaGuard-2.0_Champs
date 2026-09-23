@@ -18,10 +18,6 @@
 #include <UniversalTelegramBot.h>
 
 
-// =========================
-// REMOTEXY
-// =========================
-
 #define REMOTEXY_WIFI_SSID "superpower"
 #define REMOTEXY_WIFI_PASSWORD "12121212"
 #define REMOTEXY_CLOUD_SERVER "cloud.remotexy.com"
@@ -44,17 +40,9 @@ struct {
 #pragma pack(pop)
 
 
-// =========================
-// WIFI
-// =========================
-
 char ssid[] = "superpower";
 char pass[] = "12121212";
 
-
-// =========================
-// TELEGRAM 
-// =========================
 
 #define TELEGRAM_BOT_TOKEN "8898820256:AAEQ8_zbUYAgwBarl7Yz4vF5wt2wHepJ5qQ"
 #define TELEGRAM_CHAT_ID "1330259963"
@@ -63,9 +51,6 @@ WiFiClientSecure telegramClient;
 UniversalTelegramBot bot(TELEGRAM_BOT_TOKEN, telegramClient);
 
 
-// =========================
-// OLED
-// =========================
 
 #define OLED_SDA 21
 #define OLED_SCL 22
@@ -79,9 +64,6 @@ Adafruit_SSD1306 display(
 );
 
 
-// =========================
-// SENSOR
-// =========================
 
 #define TDS_PIN 34
 #define DHT_PIN 4
@@ -92,9 +74,6 @@ Adafruit_SSD1306 display(
 #define DHT_TYPE DHT11
 
 
-// =========================
-// MOTOR DRIVER
-// =========================
 
 #define ENA 25
 #define IN1 26
@@ -109,9 +88,7 @@ Adafruit_SSD1306 display(
 #define MOTOR_RIGHT_CHANNEL 1
 
 
-// =========================
-// OBJECT
-// =========================
+
 
 DHT dht(
   DHT_PIN,
@@ -129,9 +106,6 @@ DallasTemperature waterSensor(
 BlynkTimer timer;
 
 
-// =========================
-// SENSOR VARIABLE
-// =========================
 
 float tdsValue = 0;
 float airTemperature = 0;
@@ -140,9 +114,7 @@ float phValue = 0;
 float waterTemperature = 0;
 
 
-// =========================
-// TELEGRAM ALARM
-// =========================
+
 
 bool tdsAlarm = false;
 bool waterTempAlarm = false;
@@ -151,9 +123,6 @@ bool phLowAlarm = false;
 bool phHighAlarm = false;
 
 
-// =========================
-// OLED PAGE
-// =========================
 
 int oledPage = 0;
 
@@ -162,16 +131,11 @@ int lastTouchState = LOW;
 unsigned long lastTouchTime = 0;
 
 
-// =========================
-// MOTOR SPEED
-// =========================
 
 int MAX_SPEED = 250;
 
 
-// =========================
-// STOP MOTOR
-// =========================
+
 
 void stopMotor() {
 
@@ -186,9 +150,6 @@ void stopMotor() {
 }
 
 
-// =========================
-// MOTOR CONTROL
-// =========================
 
 void moveMotor(
   int leftMotor,
@@ -264,9 +225,9 @@ void moveMotor(
 }
 
 
-// =========================
-// ROBOT CONTROL
-// =========================
+
+
+
 
 void controlRobot() {
 
@@ -342,9 +303,9 @@ void controlRobot() {
 }
 
 
-// =========================
-// TELEGRAM ALERT
-// =========================
+
+
+
 
 void checkTelegramAlerts() {
 
@@ -484,9 +445,9 @@ void checkTelegramAlerts() {
 }
 
 
-// =========================
-// SENSOR READING
-// =========================
+
+
+
 
 void readSensors() {
 
@@ -506,7 +467,7 @@ void readSensors() {
   }
 
 
-  // TDS
+  
 
   int tdsADC =
     analogRead(TDS_PIN);
@@ -549,7 +510,7 @@ void readSensors() {
   }
 
 
-  // pH
+  
 
   int phADC =
     analogRead(PH_PIN);
@@ -572,7 +533,7 @@ void readSensors() {
     );
 
 
-  // Suhu air
+  
 
   waterSensor.requestTemperatures();
 
@@ -589,7 +550,7 @@ void readSensors() {
   }
 
 
-  // Serial monitor
+  
 
   Serial.println();
   Serial.println(
@@ -622,9 +583,9 @@ void readSensors() {
 }
 
 
-// =========================
-// SEND TO BLYNK
-// =========================
+
+
+
 
 void sendToBlynk() {
 
@@ -680,9 +641,9 @@ void sendToBlynk() {
 }
 
 
-// =========================
-// OLED
-// =========================
+
+
+
 
 void updateOLED() {
 
@@ -915,9 +876,9 @@ void updateOLED() {
 }
 
 
-// =========================
-// TOUCH
-// =========================
+
+
+
 
 void checkTouch() {
 
@@ -960,16 +921,16 @@ void checkTouch() {
 }
 
 
-// =========================
-// SETUP
-// =========================
+
+
+
 
 void setup() {
 
   Serial.begin(115200);
 
 
-  // OLED
+  
 
   Wire.begin(
     OLED_SDA,
@@ -992,7 +953,7 @@ void setup() {
   }
 
 
-  // Sensor
+  
 
   dht.begin();
 
@@ -1005,7 +966,7 @@ void setup() {
   );
 
 
-  // Motor
+  
 
   pinMode(
     IN1,
@@ -1028,7 +989,7 @@ void setup() {
   );
 
 
-  // PWM untuk ESP32 Core 2.0.17
+  
 
   ledcSetup(
     MOTOR_LEFT_CHANNEL,
@@ -1056,7 +1017,7 @@ void setup() {
   stopMotor();
 
 
-  // ADC
+  
 
   analogReadResolution(12);
 
@@ -1071,7 +1032,7 @@ void setup() {
   );
 
 
-  // OLED startup
+  
 
   display.clearDisplay();
 
@@ -1104,12 +1065,12 @@ void setup() {
   delay(1500);
 
 
-  // RemoteXY
+  
 
   RemoteXY_Init();
 
 
-  // Telegram
+  
 
   telegramClient.setInsecure();
 
@@ -1121,7 +1082,7 @@ void setup() {
   );
 
 
-  // Blynk
+  
 
   Blynk.config(
     BLYNK_AUTH_TOKEN
@@ -1132,7 +1093,7 @@ void setup() {
   );
 
 
-  // Waktu
+  
 
   configTime(
     7 * 3600,
@@ -1141,7 +1102,7 @@ void setup() {
   );
 
 
-  // Timer
+  
 
   timer.setInterval(
     2000L,
@@ -1157,10 +1118,6 @@ void setup() {
   updateOLED();
 }
 
-
-// =========================
-// LOOP
-// =========================
 
 void loop() {
 
